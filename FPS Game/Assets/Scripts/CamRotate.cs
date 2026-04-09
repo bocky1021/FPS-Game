@@ -9,8 +9,8 @@ public class CamRotate : MonoBehaviour
 
     private void Update()
     {
-        float mouse_X = Input.GetAxis("Mouse X");
-        float mouse_Y = Input.GetAxis("Mouse Y");
+        float mouse_X = Input.GetAxisRaw("Mouse X");
+        float mouse_Y = Input.GetAxisRaw("Mouse Y");
 
         mx += mouse_X * rotSpeed;
         my += mouse_Y * rotSpeed;

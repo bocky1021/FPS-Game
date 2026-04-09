@@ -8,7 +8,7 @@ public class PlayerRotate : MonoBehaviour
 
     private void Update()
     {
-        float mouse_X = Input.GetAxis("Mouse X");
+        float mouse_X = Input.GetAxisRaw("Mouse X");
 
         mx += mouse_X * rotSpeed;
 

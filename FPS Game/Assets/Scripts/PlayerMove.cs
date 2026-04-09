@@ -43,7 +43,5 @@ public class PlayerMove : MonoBehaviour
         dir.y = yVelocity;
 
         cc.Move(dir * moveSpeed * Time.deltaTime);
-
-        Debug.Log(yVelocity);
     }
 }

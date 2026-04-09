@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 231332974}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CamPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +616,7 @@ GameObject:
   - component: {fileID: 1579069278}
   - component: {fileID: 1579069277}
   - component: {fileID: 1579069276}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -842,7 +842,8 @@ GameObject:
   - component: {fileID: 1993101209}
   - component: {fileID: 1993101210}
   - component: {fileID: 1993101211}
-  m_Layer: 0
+  - component: {fileID: 1993101212}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,6 +977,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1993101212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993101204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1259b4618026ca4bad4127739525482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  firePosition: {fileID: 1993101204}
+  bombFactory: {fileID: 2606670992992166000, guid: 127e783ec272fdd4fb35d4c016dd5571, type: 3}
+  throwPower: 15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
