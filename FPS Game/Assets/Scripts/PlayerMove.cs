@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    [Header("플레이어 이동 속도")]
+    [Range(1f, 10f)]
     public float moveSpeed = 7f;
 
     CharacterController cc;
 
     float gravity = -20f;
+    [SerializeField]
     float yVelocity = 0;
 
+    [Header("플레이어 점프")]
     public float jumpPower = 10f;
+    [Space(10f)]
+    [HideInInspector]
     public bool isJumping = false;
+
+    int hp = 100;
 
     private void Start()
     {
@@ -43,5 +51,10 @@ public class PlayerMove : MonoBehaviour
         dir.y = yVelocity;
 
         cc.Move(dir * moveSpeed * Time.deltaTime);
+    }
+
+    public void DamageAction(int damage)
+    {
+        hp -= damage;
     }
 }

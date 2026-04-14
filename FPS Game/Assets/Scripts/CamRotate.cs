@@ -9,14 +9,17 @@ public class CamRotate : MonoBehaviour
 
     private void Update()
     {
-        float mouse_X = Input.GetAxisRaw("Mouse X");
-        float mouse_Y = Input.GetAxisRaw("Mouse Y");
+        if (Input.GetMouseButton(2))
+        {
+            float mouse_X = Input.GetAxisRaw("Mouse X");
+            float mouse_Y = Input.GetAxisRaw("Mouse Y");
 
-        mx += mouse_X * rotSpeed;
-        my += mouse_Y * rotSpeed;
+            mx += mouse_X * rotSpeed;
+            my += mouse_Y * rotSpeed;
 
-        my = Mathf.Clamp(my, -90f, 90f);
+            my = Mathf.Clamp(my, -90f, 90f);
 
-        transform.eulerAngles = new Vector3(-my, mx, 0);
+            transform.eulerAngles = new Vector3(-my, mx, 0);
+        }
     }
 }
