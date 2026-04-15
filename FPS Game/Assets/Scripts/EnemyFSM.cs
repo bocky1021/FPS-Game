@@ -28,6 +28,7 @@ public class EnemyFSM : MonoBehaviour
     public int attackPower = 3;
 
     Vector3 originPos;
+    Quaternion originRot;
     public float moveDistance = 20f;
 
     public int hp = 15;
@@ -44,6 +45,7 @@ public class EnemyFSM : MonoBehaviour
         cc = GetComponent<CharacterController>();
 
         originPos = transform.position;
+        originRot = transform.rotation;
 
         anim = transform.GetComponentInChildren<Animator>();
     }
@@ -79,6 +81,8 @@ public class EnemyFSM : MonoBehaviour
         {
             m_State = EnemyState.Move;
             print("상태 전환 : Idle -> Move");
+
+            anim.SetTrigger("IdleToMove");
         }
     }
 
@@ -93,6 +97,8 @@ public class EnemyFSM : MonoBehaviour
         {
             Vector3 dir = (player.position - transform.position).normalized;
             cc.Move(dir * moveSpeed * Time.deltaTime);
+
+            transform.forward = dir;
         }
         else
         {
@@ -124,14 +130,19 @@ public class EnemyFSM : MonoBehaviour
         {
             Vector3 dir = (originPos - transform.position).normalized;
             cc.Move(dir * moveSpeed * Time.deltaTime);
+
+            transform.forward = dir;
         }
         else
         {
             transform.position = originPos;
+            transform.rotation = originRot;
 
             hp = maxHp;
             m_State = EnemyState.Idle;
             print("상태 전환 : Return -> Idle");
+
+            anim.SetTrigger("MoveToIdle");
         }
     }
 
