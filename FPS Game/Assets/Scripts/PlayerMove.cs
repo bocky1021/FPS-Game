@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -18,7 +20,11 @@ public class PlayerMove : MonoBehaviour
     [HideInInspector]
     public bool isJumping = false;
 
-    int hp = 100;
+    [Header("플레이어 체력")]
+    public int hp = 20;
+    int maxHp = 20;
+    public Slider hpSlider;
+    public GameObject hitEffect;
 
     private void Start()
     {
@@ -27,6 +33,9 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.gm.gState != GameManager.GameState.Run)
+            return;
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -51,10 +60,24 @@ public class PlayerMove : MonoBehaviour
         dir.y = yVelocity;
 
         cc.Move(dir * moveSpeed * Time.deltaTime);
+
+        hpSlider.value = (float)hp / (float)maxHp;
     }
 
     public void DamageAction(int damage)
     {
         hp -= damage;
+
+        if (hp > 0)
+        {
+            StartCoroutine(PlayHitEffect());
+        }
+    }
+
+    IEnumerator PlayHitEffect()
+    {
+        hitEffect.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        hitEffect.SetActive(false);
     }
 }

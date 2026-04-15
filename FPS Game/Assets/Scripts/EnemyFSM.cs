@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class EnemyFSM : MonoBehaviour
 
     public int hp = 15;
     int maxHp = 15;
+    public Slider hpSlider;
 
     private void Start()
     {
@@ -61,10 +63,10 @@ public class EnemyFSM : MonoBehaviour
             case EnemyState.Damaged:
                 break;
             case EnemyState.Die:
-                //Die();
                 break;
-
         }
+
+        hpSlider.value = (float)hp / (float)maxHp;
     }
 
     void Idle()
@@ -148,7 +150,7 @@ public class EnemyFSM : MonoBehaviour
         {
             m_State = EnemyState.Die;
             print("상태 전환 : Any state -> Die");
-            //Die();
+            Die();
         }
     }
 
@@ -164,5 +166,20 @@ public class EnemyFSM : MonoBehaviour
 
         m_State = EnemyState.Move;
         print("상태 전환 : Damaged -> Move");
+    }
+
+    void Die()
+    {
+        StopAllCoroutines();
+        StartCoroutine(DieProcess());
+    }
+
+    IEnumerator DieProcess()
+    {
+        cc.enabled = false;
+
+        yield return new WaitForSeconds(2f);
+        print("소멸!");
+        Destroy(gameObject);
     }
 }
