@@ -34,6 +34,8 @@ public class EnemyFSM : MonoBehaviour
     int maxHp = 15;
     public Slider hpSlider;
 
+    Animator anim;
+
     private void Start()
     {
         m_State = EnemyState.Idle;
@@ -42,6 +44,8 @@ public class EnemyFSM : MonoBehaviour
         cc = GetComponent<CharacterController>();
 
         originPos = transform.position;
+
+        anim = transform.GetComponentInChildren<Animator>();
     }
 
     private void Update()
