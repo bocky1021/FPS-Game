@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -152,7 +153,9 @@ public class EnemyFSM : MonoBehaviour
         }
         else
         {
-            transform.position = originPos;
+            Vector3 delta = originPos - transform.position;
+            cc.Move(delta);
+            //transform.position = originPos;
             transform.rotation = originRot;
 
             hp = maxHp;
@@ -184,6 +187,8 @@ public class EnemyFSM : MonoBehaviour
         {
             m_State = EnemyState.Die;
             print("상태 전환 : Any state -> Die");
+
+            anim.SetTrigger("Die");
             Die();
         }
     }
