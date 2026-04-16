@@ -119,7 +119,7 @@ public class EnemyFSM : MonoBehaviour
 
             if (currentTime > attackDelay)
             {
-                player.GetComponent<PlayerMove>().DamageAction(attackPower);
+                //player.GetComponent<PlayerMove>().DamageAction(attackPower);
                 print("공격");
                 currentTime = 0;
 
@@ -134,6 +134,11 @@ public class EnemyFSM : MonoBehaviour
 
             anim.SetTrigger("AttackToMove");
         }
+    }
+
+    public void AttackAction()
+    {
+        player.GetComponent<PlayerMove>().DamageAction(attackPower);
     }
 
     void Return()
@@ -171,6 +176,8 @@ public class EnemyFSM : MonoBehaviour
         {
             m_State = EnemyState.Damaged;
             print("상태 전환 : Any state -> Damaged");
+
+            anim.SetTrigger("Damaged");
             Damaged();
         }
         else
@@ -189,7 +196,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator DamageProcess()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
 
         m_State = EnemyState.Move;
         print("상태 전환 : Damaged -> Move");
