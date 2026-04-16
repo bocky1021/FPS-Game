@@ -106,6 +106,8 @@ public class EnemyFSM : MonoBehaviour
             print("상태 전환 : Move -> Attack");
 
             currentTime = attackDelay;
+
+            anim.SetTrigger("MoveToAttackDelay");
         }
     }
 
@@ -120,7 +122,17 @@ public class EnemyFSM : MonoBehaviour
                 player.GetComponent<PlayerMove>().DamageAction(attackPower);
                 print("공격");
                 currentTime = 0;
+
+                anim.SetTrigger("StartAttack");
             }
+        }
+        else
+        {
+            m_State = EnemyState.Move;
+            print("상태 전환 : Attack -> Move");
+            currentTime = 0;
+
+            anim.SetTrigger("AttackToMove");
         }
     }
 
