@@ -12,9 +12,12 @@ public class PlayerFire : MonoBehaviour
 
     public int weaponPower = 5;
 
+    Animator anim;
+
     private void Start()
     {
         ps = bulletEffect.GetComponent<ParticleSystem>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -33,6 +36,11 @@ public class PlayerFire : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (anim.GetFloat("MoveMotion") == 0)
+            {
+                anim.SetTrigger("Attack");
+            }
+
             Transform camTr = Camera.main.transform;
             Ray ray = new Ray(camTr.position, camTr.forward);
 

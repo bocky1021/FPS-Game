@@ -26,9 +26,12 @@ public class PlayerMove : MonoBehaviour
     public Slider hpSlider;
     public GameObject hitEffect;
 
+    Animator anim;
+
     private void Start()
     {
         cc = GetComponent<CharacterController>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -40,7 +43,9 @@ public class PlayerMove : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         Vector3 dir = new Vector3(h, 0, v);
+
         dir = dir.normalized;
+        anim.SetFloat("MoveMotion", dir.magnitude);
 
         dir = Camera.main.transform.TransformDirection(dir);
 
