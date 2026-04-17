@@ -14,10 +14,21 @@ public class PlayerFire : MonoBehaviour
 
     Animator anim;
 
+    enum WeaponMode
+    {
+        Normal,
+        Sniper
+    }
+    WeaponMode wMode;
+
+    bool zoomMode = false;
+
     private void Start()
     {
         ps = bulletEffect.GetComponent<ParticleSystem>();
         anim = GetComponentInChildren<Animator>();
+
+        wMode = WeaponMode.Normal;
     }
 
     private void Update()
@@ -27,11 +38,28 @@ public class PlayerFire : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            GameObject bomb = Instantiate(bombFactory);
-            bomb.transform.position = firePosition.transform.position;
+            switch (wMode)
+            {
+                case WeaponMode.Normal:
+                    GameObject bomb = Instantiate(bombFactory);
+                    bomb.transform.position = firePosition.transform.position;
 
-            Rigidbody rb = bomb.GetComponent<Rigidbody>();
-            rb.AddForce(Camera.main.transform.forward * throwPower, ForceMode.Impulse);
+                    Rigidbody rb = bomb.GetComponent<Rigidbody>();
+                    rb.AddForce(Camera.main.transform.forward * throwPower, ForceMode.Impulse);
+                    break;
+                case WeaponMode.Sniper:
+                    if (!zoomMode)
+                    {
+                        Camera.main.fieldOfView = 15f;
+                        zoomMode = true;
+                    }
+                    else
+                    {
+                        Camera.main.fieldOfView = 60f;
+                        zoomMode = false;
+                    }
+                    break;
+            }
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -60,6 +88,17 @@ public class PlayerFire : MonoBehaviour
                     ps.Play();
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            wMode = WeaponMode.Normal;
+
+            Camera.main.fieldOfView = 60f;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            wMode = WeaponMode.Sniper;
         }
     }
 }

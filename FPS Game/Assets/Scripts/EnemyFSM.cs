@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -38,6 +38,8 @@ public class EnemyFSM : MonoBehaviour
 
     Animator anim;
 
+    NavMeshAgent smith;
+
     private void Start()
     {
         m_State = EnemyState.Idle;
@@ -49,6 +51,7 @@ public class EnemyFSM : MonoBehaviour
         originRot = transform.rotation;
 
         anim = transform.GetComponentInChildren<Animator>();
+        smith = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
@@ -96,10 +99,15 @@ public class EnemyFSM : MonoBehaviour
         }
         else if (Vector3.Distance(transform.position, player.position) > attackDistance)
         {
-            Vector3 dir = (player.position - transform.position).normalized;
-            cc.Move(dir * moveSpeed * Time.deltaTime);
+            //Vector3 dir = (player.position - transform.position).normalized;
+            //cc.Move(dir * moveSpeed * Time.deltaTime);
+            //transform.forward = dir;
 
-            transform.forward = dir;
+            smith.isStopped = true;
+            smith.ResetPath();
+
+            smith.stoppingDistance = attackDistance;
+            smith.destination = player.position;
         }
         else
         {
@@ -146,16 +154,21 @@ public class EnemyFSM : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, originPos) > 0.1f)
         {
-            Vector3 dir = (originPos - transform.position).normalized;
-            cc.Move(dir * moveSpeed * Time.deltaTime);
+            //Vector3 dir = (originPos - transform.position).normalized;
+            //cc.Move(dir * moveSpeed * Time.deltaTime);
+            //transform.forward = dir;
 
-            transform.forward = dir;
+            smith.destination = originPos;
+            smith.stoppingDistance = 0;
         }
         else
         {
-            Vector3 delta = originPos - transform.position;
-            cc.Move(delta);
-            //transform.position = originPos;
+            smith.isStopped = true;
+            smith.ResetPath();
+
+            //Vector3 delta = originPos - transform.position;
+            //cc.Move(delta);
+            transform.position = originPos;
             transform.rotation = originRot;
 
             hp = maxHp;
@@ -174,6 +187,9 @@ public class EnemyFSM : MonoBehaviour
             return;
 
         hp -= hitPower;
+
+        smith.isStopped = true;
+        smith.ResetPath();
 
         if (hp > 0)
         {
