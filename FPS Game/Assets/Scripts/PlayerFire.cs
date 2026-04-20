@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -14,14 +16,16 @@ public class PlayerFire : MonoBehaviour
 
     Animator anim;
 
+    public GameObject[] eff_Flash;
+
     enum WeaponMode
     {
         Normal,
         Sniper
     }
     WeaponMode wMode;
-
     bool zoomMode = false;
+    public Text wModeText;
 
     private void Start()
     {
@@ -88,6 +92,8 @@ public class PlayerFire : MonoBehaviour
                     ps.Play();
                 }
             }
+
+            StartCoroutine(ShootEffectOn(0.05f));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -95,10 +101,22 @@ public class PlayerFire : MonoBehaviour
             wMode = WeaponMode.Normal;
 
             Camera.main.fieldOfView = 60f;
+
+            wModeText.text = "Normal Mode";
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             wMode = WeaponMode.Sniper;
+
+            wModeText.text = "Sniper Mode";
         }
+    }
+
+    IEnumerator ShootEffectOn(float duration)
+    {
+        int num = Random.Range(0, eff_Flash.Length);
+        eff_Flash[num].SetActive(true);
+        yield return new WaitForSeconds(duration);
+        eff_Flash[num].SetActive(false);
     }
 }
