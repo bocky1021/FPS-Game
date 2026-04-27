@@ -65,13 +65,13 @@ public class PlayerMove : MonoBehaviour
         dir.y = yVelocity;
 
         cc.Move(dir * moveSpeed * Time.deltaTime);
-
-        hpSlider.value = (float)hp / (float)maxHp;
     }
 
     public void DamageAction(int damage)
     {
         hp -= damage;
+
+        hpSlider.value = (float)hp / (float)maxHp;
 
         if (hp > 0)
         {
