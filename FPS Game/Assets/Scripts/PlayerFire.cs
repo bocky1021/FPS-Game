@@ -18,6 +18,15 @@ public class PlayerFire : MonoBehaviour
 
     public GameObject[] eff_Flash;
 
+    public GameObject weapon01;
+    public GameObject weapon02;
+    public GameObject crosshair01;
+    public GameObject crosshair02;
+    public GameObject weapon01_R;
+    public GameObject weapon02_R;
+
+    public GameObject crosshair02_zoom;
+
     enum WeaponMode
     {
         Normal,
@@ -56,11 +65,17 @@ public class PlayerFire : MonoBehaviour
                     {
                         Camera.main.fieldOfView = 15f;
                         zoomMode = true;
+
+                        crosshair02_zoom.SetActive(true);
+                        crosshair02.SetActive(false);
                     }
                     else
                     {
                         Camera.main.fieldOfView = 60f;
                         zoomMode = false;
+
+                        crosshair02_zoom.SetActive(false);
+                        crosshair02.SetActive(true);
                     }
                     break;
             }
@@ -103,12 +118,29 @@ public class PlayerFire : MonoBehaviour
             Camera.main.fieldOfView = 60f;
 
             wModeText.text = "Normal Mode";
+
+            weapon01.SetActive(true);
+            weapon02.SetActive(false);
+            crosshair01.SetActive(true);
+            crosshair02.SetActive(false);
+            weapon01_R.SetActive(true);
+            weapon02_R.SetActive(false);
+
+            crosshair02_zoom.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             wMode = WeaponMode.Sniper;
 
             wModeText.text = "Sniper Mode";
+
+            weapon01.SetActive(false);
+            weapon02.SetActive(true);
+            crosshair01.SetActive(false);
+            if (!zoomMode)
+                crosshair02.SetActive(true);
+            weapon01_R.SetActive(false);
+            weapon02_R.SetActive(true);
         }
     }
 
