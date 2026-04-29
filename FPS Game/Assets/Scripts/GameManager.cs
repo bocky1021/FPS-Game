@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public enum GameState
     {
+        Opening,
         Ready,
         Run,
         Pause,
@@ -32,12 +33,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        gState = GameState.Ready;
+        gState = GameState.Opening;
         gameText = gameLabel.GetComponent<Text>();
-        gameText.text = "Ready...";
-        gameText.color = new Color32(255, 185, 0, 255);
-
-        StartCoroutine(ReadyToStart());
 
         player = GameObject.Find("Player").GetComponent<PlayerMove>();
     }
@@ -57,6 +54,15 @@ public class GameManager : MonoBehaviour
 
             gState = GameState.GameOver;
         }
+    }
+
+    public void ReadyGo()
+    {
+        gState = GameState.Ready;
+        gameText.text = "Ready...";
+        gameText.color = new Color32(255, 185, 0, 255);
+
+        StartCoroutine(ReadyToStart());
     }
 
     IEnumerator ReadyToStart()
