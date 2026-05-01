@@ -227,6 +227,8 @@ public class EnemyFSM : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(DieProcess());
+
+        GameManager.gm.EnemyKillCnt();
     }
 
     IEnumerator DieProcess()

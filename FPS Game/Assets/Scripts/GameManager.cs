@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject gameOption;
 
+    int enemyKillCnt = 0;
+    public Text enemyKillCntTxt;
+
     private void Start()
     {
         gState = GameState.Opening;
@@ -98,5 +101,11 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void EnemyKillCnt()
+    {
+        enemyKillCnt++;
+        enemyKillCntTxt.text = $"{enemyKillCnt} KILL";
     }
 }

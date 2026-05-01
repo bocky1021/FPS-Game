@@ -25,6 +25,7 @@ public class PlayerMove : MonoBehaviour
     int maxHp = 20;
     public Slider hpSlider;
     public GameObject hitEffect;
+    public Animator lowLifeAnim;
 
     Animator anim;
 
@@ -70,13 +71,28 @@ public class PlayerMove : MonoBehaviour
     public void DamageAction(int damage)
     {
         hp -= damage;
-
         hpSlider.value = (float)hp / (float)maxHp;
+
+        CheckLowLife();
 
         if (hp > 0)
         {
             StartCoroutine(PlayHitEffect());
         }
+    }
+
+    void CheckLowLife()
+    {
+        if (GameManager.gm.gState == GameManager.GameState.GameOver)
+        {
+            lowLifeAnim.SetBool("lowLife", false);
+            return;
+        }
+
+        if ((float)hp / maxHp <= 0.15f)
+            lowLifeAnim.SetBool("lowLife", true);
+        else
+            lowLifeAnim.SetBool("lowLife", false);
     }
 
     IEnumerator PlayHitEffect()

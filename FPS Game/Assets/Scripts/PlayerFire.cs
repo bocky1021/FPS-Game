@@ -96,8 +96,16 @@ public class PlayerFire : MonoBehaviour
             {
                 if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    EnemyFSM eFSM = hitInfo.transform.GetComponent<EnemyFSM>();
-                    eFSM.HitEnemy(weaponPower);
+                    if (hitInfo.transform.CompareTag("EnemyHead"))
+                    {
+                        EnemyFSM eFSM = hitInfo.transform.GetComponentInParent<EnemyFSM>();
+                        eFSM.HitEnemy(eFSM.hp);
+                    }
+                    else
+                    {
+                        EnemyFSM eFSM = hitInfo.transform.GetComponent<EnemyFSM>();
+                        eFSM.HitEnemy(weaponPower);
+                    }
                 }
                 else
                 {
